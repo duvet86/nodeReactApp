@@ -1,0 +1,25 @@
+import '../css/main.css';
+
+import React from 'react';
+import { render } from 'react-dom';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router'
+
+import AppContainer from './component/app-container.component';
+import Dashboard from './component/dashboard.component';
+import About from './component/about.component';
+import Home from './component/home.component';
+import Settings from './component/settings.component';
+import Profile from './component/profile.component';
+
+render((
+		<Router history={browserHistory}>
+			<Route path="/" component={AppContainer}>
+				<IndexRoute component={Dashboard}/>
+				<Route path="home" component={Home}/>
+				<Route path="about" component={MyButton}/>
+				<Route path="settings" component={Settings}/>
+				<Route path="profile" component={Profile}/>
+			</Route>
+		</Router>
+	),
+	document.getElementById('myGridContainer'));

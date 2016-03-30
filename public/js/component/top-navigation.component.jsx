@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes, Component } from 'react';
 
 import { IndexLink } from 'react-router'
 import { LinkContainer } from 'react-router-bootstrap';
@@ -10,18 +10,52 @@ import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import Input from 'react-bootstrap/lib/Input';
 
-export default class TopNavigation extends React.Component {
+import auth from '../utils/auth'
+
+export default class TopNavigation extends Component {
+	
+	static propTypes = {
+		initialEventKey: PropTypes.number,
+		loggedIn: PropTypes.bool
+	};
+	
+	static defaultProps = {
+		initialEventKey: 1,
+		loggedIn: auth.loggedIn()
+	};
 	
 	constructor(props) {
 		super(props);
-		this.state = { activeKey: props.initialEventKey }
+		this.state = {
+			activeKey: props.initialEventKey,
+			loggedIn: props.loggedIn
+		}
+	}
+	
+	updateAuth = (loggedIn) => {
+		this.setState({
+			loggedIn: Boolean(loggedIn)
+	    })
 	}
 	
 	handleSelect = (selectedKey) => {
 		this.setState({ activeKey: selectedKey });
 	}
 	
+	componentWillMount() {
+		auth.onChange = this.updateAuth;
+	    auth.login();
+	}
+	
 	render() {
+
+		let label = "Logout";
+		let path = "/logout";
+		if (!this.state.loggedIn) {
+			label = "Login";
+			path = "/login";
+		}
+	
 		return (
 			<Navbar fluid fixedTop>
 				<Navbar.Header>
@@ -37,8 +71,8 @@ export default class TopNavigation extends React.Component {
 						<LinkContainer to={{pathname: '/settings'}}>
 							<NavItem eventKey={2}>Setting</NavItem>
 						</LinkContainer>
-						<LinkContainer to={{pathname: '/profile'}}>
-							<NavItem eventKey={3}>Profile</NavItem>
+            			<LinkContainer to={{pathname: path}}>
+							<NavItem eventKey={3}>{label}</NavItem>
 						</LinkContainer>
 						<NavDropdown eventKey={4} title="Help" id="basic-nav-dropdown">
 							<MenuItem eventKey={4.1}>Action</MenuItem>
@@ -53,6 +87,3 @@ export default class TopNavigation extends React.Component {
 		);
 	}
 }
-	
-TopNavigation.propTypes = { initialEventKey: React.PropTypes.number };
-TopNavigation.defaultProps = { initialEventKey: 1 };

@@ -1,0 +1,35 @@
+{
+  "ecmaVersion": 6,
+  "plugins": {
+    "outline": {
+      
+    },
+    "es_modules": {
+      
+    },
+    "node": {
+      
+    },
+    "guess-types": {
+      
+    },
+    "complete_strings": {
+      
+    },
+    "requirejs": {
+      
+    },
+    "node-express": {
+      
+    },
+    "bootstrap": {
+      
+    }
+  },
+  "libs": [
+    "ecma5",
+    "ecma6",
+    "browser",
+    "jquery"
+  ]
+}
