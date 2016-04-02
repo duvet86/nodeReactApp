@@ -10,51 +10,49 @@ import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import Input from 'react-bootstrap/lib/Input';
 
-import auth from '../utils/auth'
+//import auth from '../utils/auth'
+import * as AppActionCreator from '../flux/actions/AppActionCreator'
 
 export default class TopNavigation extends Component {
 	
 	static propTypes = {
-		initialEventKey: PropTypes.number,
-		loggedIn: PropTypes.bool
+		activeKey: PropTypes.number.isRequired,
+		//loggedIn: PropTypes.bool.isRequired
 	};
 	
-	static defaultProps = {
-		initialEventKey: 1,
-		loggedIn: auth.loggedIn()
-	};
-	
-	constructor(props) {
-		super(props);
-		this.state = {
-			activeKey: props.initialEventKey,
-			loggedIn: props.loggedIn
-		}
-	}
+//	constructor(props) {
+//		super(props);
+//		this.state = AppStore.getStore({
+//			activeKey: props.initialEventKey,
+//			loggedIn: props.loggedIn
+//		});
+//	}
 	
 	updateAuth = (loggedIn) => {
-		this.setState({
-			loggedIn: Boolean(loggedIn)
-	    })
+		// ACTION LOGIN STORE
+//		this.setState({
+//			loggedIn: Boolean(loggedIn)
+//	    })
 	}
 	
 	handleSelect = (selectedKey) => {
-		this.setState({ activeKey: selectedKey });
+		AppActionCreator.changeTab({ activeKey: selectedKey });
+		//this.setState({ activeKey: selectedKey });
 	}
 	
-	componentWillMount() {
-		auth.onChange = this.updateAuth;
-	    auth.login();
-	}
+//	componentWillMount() {
+//		auth.onChange = this.updateAuth;
+//	    auth.login();
+//	}
 	
 	render() {
 
 		let label = "Logout";
 		let path = "/logout";
-		if (!this.state.loggedIn) {
-			label = "Login";
-			path = "/login";
-		}
+//		if (!this.state.loggedIn) {
+//			label = "Login";
+//			path = "/login";
+//		}
 	
 		return (
 			<Navbar fluid fixedTop>
@@ -64,7 +62,7 @@ export default class TopNavigation extends Component {
 					</Navbar.Brand>
 				</Navbar.Header>
 				<Navbar.Collapse>
-					<Nav pullRight activeKey={this.state.activeKey} onSelect={this.handleSelect}>
+					<Nav pullRight activeKey={this.props.activeKey} onSelect={this.handleSelect}>
 						<Navbar.Form pullLeft>
 		        			<Input type="text" placeholder="Search"/>
 		        		</Navbar.Form>

@@ -1,15 +1,11 @@
 import React, { Component } from 'react'
 
-import auth from '../utils/auth'
+import * as AppActionCreator from '../flux/actions/AppActionCreator'
 
 export default class Logout extends Component {
 	
-	constructor(props) {
-		super(props);
-	}
-	
 	componentDidMount() {
-		auth.logout();
+		AppActionCreator.logout();
 	}
 
 	render() {

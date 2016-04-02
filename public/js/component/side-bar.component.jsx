@@ -5,23 +5,26 @@ import { IndexLinkContainer, LinkContainer } from 'react-router-bootstrap';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 
+import * as AppActionCreator from '../flux/actions/AppActionCreator'
+
 export default class SideBar extends Component {
 
-	static propTypes = { initialEventKey: PropTypes.number };
-	static defaultProps = { initialEventKey: 1 };
+	//static propTypes = { initialEventKey: PropTypes.number };
+	//static defaultProps = { initialEventKey: 1 };
+	static propTypes = { activeKey: PropTypes.number.isRequired };
 	
-	constructor(props) {
-		super(props);
-		this.state = { activeKey: props.initialEventKey }
-	}
+//	constructor(props) {
+//		super(props);
+//		this.state = { activeKey: props.initialEventKey }
+//	}
 	
 	handleSelect = (selectedKey) => {
-		this.setState({ activeKey: selectedKey });
+		AppActionCreator.changeTab({ activeKey: selectedKey });
 	}
 
 	render() {
 		return (
-			<Nav className="nav-sidebar" activeKey={this.state.activeKey} onSelect={this.handleSelect}>
+			<Nav className="nav-sidebar" activeKey={this.props.activeKey} onSelect={this.handleSelect}>
 				<IndexLinkContainer to={{pathname: '/'}}>
 					<NavItem eventKey={1}>Home</NavItem>
 				</IndexLinkContainer>
