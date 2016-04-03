@@ -10,49 +10,27 @@ import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import Input from 'react-bootstrap/lib/Input';
 
-//import auth from '../utils/auth'
 import * as AppActionCreator from '../flux/actions/AppActionCreator'
 
 export default class TopNavigation extends Component {
 	
 	static propTypes = {
 		activeKey: PropTypes.number.isRequired,
-		//loggedIn: PropTypes.bool.isRequired
+		authenticated: PropTypes.bool.isRequired
 	};
-	
-//	constructor(props) {
-//		super(props);
-//		this.state = AppStore.getStore({
-//			activeKey: props.initialEventKey,
-//			loggedIn: props.loggedIn
-//		});
-//	}
-	
-	updateAuth = (loggedIn) => {
-		// ACTION LOGIN STORE
-//		this.setState({
-//			loggedIn: Boolean(loggedIn)
-//	    })
-	}
 	
 	handleSelect = (selectedKey) => {
 		AppActionCreator.changeTab({ activeKey: selectedKey });
-		//this.setState({ activeKey: selectedKey });
 	}
-	
-//	componentWillMount() {
-//		auth.onChange = this.updateAuth;
-//	    auth.login();
-//	}
 	
 	render() {
 
 		let label = "Logout";
 		let path = "/logout";
-//		if (!this.state.loggedIn) {
-//			label = "Login";
-//			path = "/login";
-//		}
+		if (!this.props.authenticated) {
+			label = "Login";
+			path = "/login";
+		}
 	
 		return (
 			<Navbar fluid fixedTop>

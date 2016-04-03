@@ -4,8 +4,6 @@ import { Store } from 'flux/utils';
 
 import { Map } from 'immutable';
 
-//Initialize the singleton to register with the
-//dispatcher and export for React components
 class TabStoreClass extends Store {
 
 	constructor(dispatcher, store) {
@@ -17,9 +15,7 @@ class TabStoreClass extends Store {
 		return this._store;
 	}
 
-//Register each of the actions with the dispatcher
-//by changing the store's data and emitting a
-//change
+	// @override
 	__onDispatch(payload) {
 
 		const { type, activeKey } = payload;
@@ -33,7 +29,7 @@ class TabStoreClass extends Store {
 	}
 }
 
-let store = Map({ activeKey: 1 });
+let store = new Map({ activeKey: 1 });
 
 const TabStore = new TabStoreClass(AppDispatcher, store);
 	

@@ -22,7 +22,7 @@ export function isDispatching() {
  * Dispatches a single action.
  */
 export function dispatch(type, action = {}) {
-	
+
 	if (!type) {
 		throw new Error('You forgot to specify type.');
 	}
@@ -51,7 +51,7 @@ export function dispatch(type, action = {}) {
 export function dispatchAsync(promise, types, action = {}) {
 
 	const { request, success, failure } = types;
-
+	
 	dispatch(request, action);
 	promise.then(
 		response => dispatch(success, { ...action, response }),

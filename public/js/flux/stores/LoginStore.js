@@ -1,11 +1,30 @@
-import * as AppDispatcher from '../AppDispatcher';
-import ActionTypes from '../constants/ActionTypes';
 import { Store } from 'flux/utils';
 
 import { Map } from 'immutable';
 
-//Initialize the singleton to register with the
-//dispatcher and export for React components
+import ActionTypes from '../constants/ActionTypes';
+import * as AppDispatcher from '../AppDispatcher';
+
+import auth from '../../utils/auth';
+
+function createStore() {
+	
+	let authenticated = false;
+	let token = null; 
+	if (auth.loggedIn()) {
+		authenticated = true;
+		token = auth.getToken();
+	}
+	
+	return new  Map(
+	{
+		loading: false,
+		error: false,
+		authenticated: authenticated,
+		token: token
+	});
+}
+
 class LoginStoreClass extends Store {
 
 	constructor(dispatcher, store) {
@@ -17,43 +36,49 @@ class LoginStoreClass extends Store {
 		return this._store;
 	}
 
-//Register each of the actions with the dispatcher
-//by changing the store's data and emitting a
-//change
+	// @override
 	__onDispatch(payload) {
 
-		const { type, response } = payload;
+		const { cb, response, type } = payload;
+		let updatedStore = {};
 
 		switch (type) {
 			case ActionTypes.REQUEST_USER:
 				// loading
+				updatedStore = new  Map({ loading: true });
+				this._store = this._store.merge(updatedStore);
 				this.__emitChange();
 				break;
 		
 			case ActionTypes.REQUEST_USER_ERROR:
 				// error
+				updatedStore = new  Map({ error: true });
+				this._store = this._store.merge(updatedStore);
 				this.__emitChange();
 				break;
 		
 			case ActionTypes.REQUEST_USER_SUCCESS:
 				// process success
-				//this._store = this._store.update("activeKey", (activeKey) => activeKey);
+				const { authenticated, token } = response;
+				updatedStore = new  Map(
+				{
+					authenticated: authenticated,
+					token: token
+				});
+				this._store = this._store.merge(updatedStore);
 				this.__emitChange();
+				cb();
 				break;
 				
 			case ActionTypes.LOGOUT:
-				// loading
+				this._store = createStore();
 				this.__emitChange();
 				break;
 		}
 	}
 }
 
-let store = Map({
-	error: false,
-	authenticated: false,
-	token: null
-});
+let store = createStore();
 
 const LoginStore = new LoginStoreClass(AppDispatcher, store);
 

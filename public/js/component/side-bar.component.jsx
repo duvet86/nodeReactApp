@@ -9,14 +9,7 @@ import * as AppActionCreator from '../flux/actions/AppActionCreator'
 
 export default class SideBar extends Component {
 
-	//static propTypes = { initialEventKey: PropTypes.number };
-	//static defaultProps = { initialEventKey: 1 };
 	static propTypes = { activeKey: PropTypes.number.isRequired };
-	
-//	constructor(props) {
-//		super(props);
-//		this.state = { activeKey: props.initialEventKey }
-//	}
 	
 	handleSelect = (selectedKey) => {
 		AppActionCreator.changeTab({ activeKey: selectedKey });

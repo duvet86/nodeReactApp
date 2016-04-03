@@ -1,10 +1,9 @@
 import { dispatch, dispatchAsync } from '../AppDispatcher';
 import ActionTypes from '../constants/ActionTypes';
-//import AppStore from '../stores/AppStore';
 
-import auth from '../../utils/auth'
+import auth from '../../utils/auth';
 
-export function login(email, pass) {
+export function login(email, pass, cb) {
 	// Exit early if we know enough about this user
 //	if (AppStore.contains(email, pass)) {
 //		return;
@@ -14,7 +13,7 @@ export function login(email, pass) {
 		request: ActionTypes.REQUEST_USER,
 		success: ActionTypes.REQUEST_USER_SUCCESS,
 		failure: ActionTypes.REQUEST_USER_ERROR
-	}, {});
+	}, { cb: cb });
 }
 
 export function logout(email, pass) {
