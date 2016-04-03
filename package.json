@@ -4,7 +4,7 @@
   "description": "node reat app",
   "main": "server.js",
   "scripts": {
-    "start": "npm run start:prod",
+    "start": "webpack --config ./webpack.prod.config --progress --profile --colors && node server",
     "start:dev": "rimraf public/js/build/bundle.js && node server",
     "start:prod": "webpack --config ./webpack.prod.config --progress --profile --colors && node server",
     "test": "echo \"Error: no test specified\" && exit 1"
