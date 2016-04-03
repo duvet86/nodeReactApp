@@ -2,7 +2,7 @@
   "name": "reactapp",
   "version": "1.0.0",
   "description": "node reat app",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "npm run start:dev",
     "start:dev": "rimraf public/js/build/bundle.js && node server",
