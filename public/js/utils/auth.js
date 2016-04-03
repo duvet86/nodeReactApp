@@ -6,7 +6,10 @@ export default class {
 				(resolve, reject) => {
 
 					if (localStorage.token) {
-						resolve(true);
+						resolve({
+							authenticated: true,
+							token: localStorage.token
+						});
 						return;
 					}
 
