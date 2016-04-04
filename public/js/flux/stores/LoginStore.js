@@ -35,11 +35,15 @@ class LoginStoreClass extends Store {
 	getStore() {
 		return this._store;
 	}
+	
+	isLoggedIn() {
+		return this._store.get("authenticated");
+	}
 
 	// @override
 	__onDispatch(payload) {
 
-		const { cb, response, type } = payload;
+		const { resolve, response, type } = payload;
 		let updatedStore = {};
 
 		switch (type) {
@@ -67,7 +71,7 @@ class LoginStoreClass extends Store {
 				});
 				this._store = this._store.merge(updatedStore);
 				this.__emitChange();
-				cb();
+				resolve();
 				break;
 				
 			case ActionTypes.LOGOUT:

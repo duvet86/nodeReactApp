@@ -8,12 +8,13 @@ export function login(email, pass, cb) {
 //	if (AppStore.contains(email, pass)) {
 //		return;
 //	}
-
-	dispatchAsync(auth.login(email, pass), {
-		request: ActionTypes.REQUEST_USER,
-		success: ActionTypes.REQUEST_USER_SUCCESS,
-		failure: ActionTypes.REQUEST_USER_ERROR
-	}, { cb: cb });
+	return new Promise((resolve, reject) => {
+		dispatchAsync(auth.login(email, pass), {
+			request: ActionTypes.REQUEST_USER,
+			success: ActionTypes.REQUEST_USER_SUCCESS,
+			failure: ActionTypes.REQUEST_USER_ERROR
+		}, { resolve: resolve });
+	});
 }
 
 export function logout(email, pass) {

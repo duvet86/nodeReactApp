@@ -1,17 +1,17 @@
-import auth from '../utils/auth.js'
+import LoginStore from '../flux/stores/LoginStore';
 
 function redirectToLogin(nextState, replace) {
-  if (!auth.loggedIn()) {
+  if (!LoginStore.isLoggedIn()) {
     replace({
       pathname: '/login',
       state: { nextPathname: nextState.location.pathname }
-    })
+    });
   }
 }
 
 function redirectToDashboard(nextState, replace) {
-  if (auth.loggedIn()) {
-    replace('/')
+  if (LoginStore.isLoggedIn()) {
+    replace('/');
   }
 }
 
@@ -21,15 +21,15 @@ export default {
     { path: '/logout',
       getComponent: (location, cb) => {
         require.ensure([], (require) => {
-          cb(null, require('../component/logout.component').default)
-        })
+          cb(null, require('../component/logout.component').default);
+        });
       }
     },
     { path: '/about',
       getComponent: (location, cb) => {
         require.ensure([], (require) => {
-          cb(null, require('../component/about.component').default)
-        })
+          cb(null, require('../component/about.component').default);
+        });
       }
     },
 
@@ -40,8 +40,8 @@ export default {
         { path: '/login',
           getComponent: (location, cb) => {
             require.ensure([], (require) => {
-              cb(null, require('../component/login.component').default)
-            })
+              cb(null, require('../component/login.component').default);
+            });
           }
         }
         // ...
@@ -54,8 +54,8 @@ export default {
         { path: '/user/:id',
           getComponent: (location, cb) => {
             require.ensure([], (require) => {
-              cb(null, require('../component/profile.component').default)
-            })
+              cb(null, require('../component/profile.component').default);
+            });
           }
         }
         // ...
@@ -68,8 +68,8 @@ export default {
         { path: '/settings',
           getComponent: (location, cb) => {
             require.ensure([], (require) => {
-              cb(null, require('../component/settings.component').default)
-            })
+              cb(null, require('../component/settings.component').default);
+            });
           }
         }
         // ...
@@ -80,27 +80,27 @@ export default {
       getComponent: (location, cb) => {
         // Share the path
         // Dynamically load the correct component
-        if (auth.loggedIn()) {
+        if (LoginStore.isLoggedIn()) {
           return require.ensure([], (require) => {
-            cb(null, require('../component/dashboard.component').default)
-          })
+            cb(null, require('../component/dashboard.component').default);
+          });
         }
         return require.ensure([], (require) => {
-          cb(null, require('../component/home.component').default)
-        })
+          cb(null, require('../component/home.component').default);
+        });
       },
       indexRoute: {
         getComponent: (location, cb) => {
           // Only load if we're logged in
-          if (auth.loggedIn()) {
+          if (LoginStore.isLoggedIn()) {
             return require.ensure([], (require) => {
-              cb(null, require('../component/dashboard.component').default)
-            })
+              cb(null, require('../component/dashboard.component').default);
+            });
           }
-          return cb()
+          return cb();
         }
       }
     }
 
   ]
-}
+};

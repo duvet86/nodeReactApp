@@ -18,13 +18,14 @@ export default class Login extends Component {
 		const pass = this.refs.pass.value;
 
 		const { location } = this.props;
-		AppActionCreator.login(email, pass, () => {
-			if (location.state && location.state.nextPathname) {
-				this.context.router.replace(location.state.nextPathname);
-			} else {
-				this.context.router.replace('/');
-			}
-		});
+		AppActionCreator.login(email, pass)
+			.then(() => {
+				if (location.state && location.state.nextPathname) {
+					this.context.router.replace(location.state.nextPathname);
+				} else {
+					this.context.router.replace('/');
+				}
+			});
 		
 	}
 
