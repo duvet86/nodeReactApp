@@ -10,9 +10,13 @@ import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import Input from 'react-bootstrap/lib/Input';
 
-import * as AppActionCreator from '../flux/actions/AppActionCreator'
+import TabActionCreators from '../flux/actions/TabActionCreators'
+
+import FacebookActionCreators from '../flux/actions/FacebookActionsCreator'
 
 export default class TopNavigation extends Component {
+	
+	static contextTypes = { router: React.PropTypes.object };
 	
 	static propTypes = {
 		activeKey: PropTypes.number.isRequired,
@@ -20,18 +24,35 @@ export default class TopNavigation extends Component {
 	};
 	
 	handleSelect = (selectedKey) => {
-		AppActionCreator.changeTab({ activeKey: selectedKey });
+		TabActionCreators.changeTab({ activeKey: selectedKey });
+	}
+	
+	handleFacebookLoginButton = (e) => {
+		e.preventDefault();
+		
+		FacebookActionCreators.login()
+			.then((res) => {
+				this.context.router.replace('/');
+			});
+		
+	}
+	
+	handleFacebookLogoutButton = (e) => {
+		e.preventDefault();
+		
+		FacebookActionCreators.logout()
+			.then((res) => {
+				this.context.router.replace('/');
+			});
 	}
 	
 	render() {
-
-		let label = "Logout";
-		let path = "/logout";
-		if (!this.props.authenticated) {
-			label = "Login";
-			path = "/login";
+		
+		let link = <NavItem eventKey={3} onClick={this.handleFacebookLoginButton}>Login Facebook</NavItem>;
+		if (this.props.authenticated) {
+			link = <NavItem eventKey={3} onClick={this.handleFacebookLogoutButton}>Logout Facebook</NavItem>;
 		}
-	
+		
 		return (
 			<Navbar fluid fixedTop>
 				<Navbar.Header>
@@ -47,9 +68,7 @@ export default class TopNavigation extends Component {
 						<LinkContainer to={{pathname: '/settings'}}>
 							<NavItem eventKey={2}>Setting</NavItem>
 						</LinkContainer>
-            			<LinkContainer to={{pathname: path}}>
-							<NavItem eventKey={3}>{label}</NavItem>
-						</LinkContainer>
+						{link}
 						<NavDropdown eventKey={4} title="Help" id="basic-nav-dropdown">
 							<MenuItem eventKey={4.1}>Action</MenuItem>
 							<MenuItem eventKey={4.2}>Another action</MenuItem>

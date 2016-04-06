@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 
-import * as AppActionCreator from '../flux/actions/AppActionCreator'
+import FacebookActionCreators from '../flux/actions/FacebookActionsCreator'
 
 export default class Logout extends Component {
 	
 	componentDidMount() {
-		AppActionCreator.logout();
+		FacebookActionCreators.logout();
 	}
 
 	render() {

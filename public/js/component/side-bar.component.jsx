@@ -5,14 +5,14 @@ import { IndexLinkContainer, LinkContainer } from 'react-router-bootstrap';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 
-import * as AppActionCreator from '../flux/actions/AppActionCreator'
+import TabActionCreators from '../flux/actions/TabActionCreators'
 
 export default class SideBar extends Component {
 
 	static propTypes = { activeKey: PropTypes.number.isRequired };
 	
 	handleSelect = (selectedKey) => {
-		AppActionCreator.changeTab({ activeKey: selectedKey });
+		TabActionCreators.changeTab({ activeKey: selectedKey });
 	}
 
 	render() {

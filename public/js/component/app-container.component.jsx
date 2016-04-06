@@ -9,35 +9,56 @@ import Col from 'react-bootstrap/lib/Col';
 import TopNavigation from './top-navigation.component';
 import SideBar from './side-bar.component';
 
+import ActionTypes from '../flux/constants/ActionTypes';
+
 import TabStore from '../flux/stores/TabStore';
-import LoginStore from '../flux/stores/LoginStore';
+import FacebookLoginStore from '../flux/stores/FacebookLoginStore';
+import FacebookActionsCreator from '../flux/actions/FacebookActionsCreator';
 
 export default class AppContainer extends Component {
 
+	static contextTypes = { router: React.PropTypes.object };
+	
 	constructor(props) {
 		super(props);
 		this.state = {
 			tabSore: TabStore.getStore(),
-			loginStore: LoginStore.getStore()
+			loginStore: FacebookLoginStore.getStore()
 		};
 	}
 
 	componentDidMount() {
 		TabStore.addListener(this._onChangeTabStore);
-		LoginStore.addListener(this._onChangeLoginStore);
+		FacebookLoginStore.addListener(this._onChangeFacebookLoginStore);
+		
+		const { location } = this.props;
+		FacebookActionsCreator.initFacebook()
+			.then((res) => {
+				console.log(location);
+				if (res == ActionTypes.FACEBOOK_LOGIN) {
+					this.context.router.replace('/');
+				} else {
+					this.context.router.replace('/login');
+				}
+			});
 	}
 
 	componentWillUnmount() {
 		TabStore.remove();
-		LoginStore.remove();
+		FacebookLoginStore.remove();
+	}
+	
+	_onChangeTabStore = () => {
+		this.setState({ tabSore: TabStore.getStore() });
+	}
+	
+	_onChangeFacebookLoginStore = () => {
+		this.setState({ loginStore: FacebookLoginStore.getStore() });
 	}
 
 	render() {
 		
-		let loginProps = {
-			loading: this.state.loginStore.get("loading"),
-			error: this.state.loginStore.get("error")
-		};
+		let loginProps = { error: this.state.loginStore.get("error") };
 		
 		return (
 			<div>
@@ -54,13 +75,5 @@ export default class AppContainer extends Component {
 				</Grid>
 			</div>
 		);
-	}
-	
-	_onChangeTabStore = () => {
-		this.setState({ tabSore: TabStore.getStore() });
-	}
-	
-	_onChangeLoginStore = () => {
-		this.setState({ loginStore: LoginStore.getStore() });
 	}
 }

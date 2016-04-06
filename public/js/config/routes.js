@@ -1,7 +1,7 @@
-import LoginStore from '../flux/stores/LoginStore';
+import FacebookLoginStore from '../flux/stores/FacebookLoginStore';
 
 function redirectToLogin(nextState, replace) {
-  if (!LoginStore.isLoggedIn()) {
+  if (!FacebookLoginStore.isLoggedIn()) {
     replace({
       pathname: '/login',
       state: { nextPathname: nextState.location.pathname }
@@ -10,7 +10,7 @@ function redirectToLogin(nextState, replace) {
 }
 
 function redirectToDashboard(nextState, replace) {
-  if (LoginStore.isLoggedIn()) {
+  if (FacebookLoginStore.isLoggedIn()) {
     replace('/');
   }
 }
@@ -80,7 +80,7 @@ export default {
       getComponent: (location, cb) => {
         // Share the path
         // Dynamically load the correct component
-        if (LoginStore.isLoggedIn()) {
+        if (FacebookLoginStore.isLoggedIn()) {
           return require.ensure([], (require) => {
             cb(null, require('../component/dashboard.component').default);
           });
@@ -92,7 +92,7 @@ export default {
       indexRoute: {
         getComponent: (location, cb) => {
           // Only load if we're logged in
-          if (LoginStore.isLoggedIn()) {
+          if (FacebookLoginStore.isLoggedIn()) {
             return require.ensure([], (require) => {
               cb(null, require('../component/dashboard.component').default);
             });

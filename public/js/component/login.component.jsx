@@ -1,24 +1,16 @@
 import React, { Component, PropTypes } from 'react'
 
-import * as AppActionCreator from '../flux/actions/AppActionCreator'
+import FacebookActionCreators from '../flux/actions/FacebookActionsCreator'
 
 export default class Login extends Component {
 
 	static contextTypes = { router: React.PropTypes.object };
-	static propTypes =
-	{
-		loading: PropTypes.bool,
-		error: PropTypes.bool
-	};
 
-	handleSubmit = (e) => {
+	handleFacebookLoginButton = (e) => {
 		e.preventDefault();
-
-		const email = this.refs.email.value;
-		const pass = this.refs.pass.value;
-
+		
 		const { location } = this.props;
-		AppActionCreator.login(email, pass)
+		FacebookActionCreators.login()
 			.then(() => {
 				if (location.state && location.state.nextPathname) {
 					this.context.router.replace(location.state.nextPathname);
@@ -30,20 +22,7 @@ export default class Login extends Component {
 	}
 
 	render() {
-		
-		let html = <div>Loading</div>;
-		
-		if (!this.props.loading) {
-			html =
-				<form onSubmit={this.handleSubmit}>
-					<label><input type="text" ref="email" placeholder="email" defaultValue="joe@example.com" /></label>
-					<label><input type="text" ref="pass" placeholder="password" defaultValue="password1" /></label> (hint: password1)<br />
-					<button type="submit">login</button>
-					{this.props.error && (<p>Bad login information</p>)}
-				</form>;
-		}
-			
-		return (html)
+		return (<button ref="loginButton" onClick={this.handleFacebookLoginButton}>Log Into Facebook</button>);
 	}
 
 }

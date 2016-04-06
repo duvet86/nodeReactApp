@@ -6,9 +6,9 @@ import { Map } from 'immutable';
 
 class TabStoreClass extends Store {
 
-	constructor(dispatcher, store) {
-		super(dispatcher, store);
-		this._store = store;
+	constructor(dispatcher) {
+		super(dispatcher);
+		this._store = new Map({ activeKey: 1 });
 	}
 	
 	getStore() {
@@ -29,8 +29,6 @@ class TabStoreClass extends Store {
 	}
 }
 
-let store = new Map({ activeKey: 1 });
-
-const TabStore = new TabStoreClass(AppDispatcher, store);
+const TabStore = new TabStoreClass(AppDispatcher);
 	
 export default TabStore;
