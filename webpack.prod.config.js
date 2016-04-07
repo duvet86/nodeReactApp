@@ -7,7 +7,8 @@ const config = {
 	],
 	output: {
 		path: PATHS.output.path,
-		filename: PATHS.output.filename
+		filename: PATHS.output.filename,
+		publicPath: PATHS.output.publicPath
 	},
 	module: {
 		loaders: [{

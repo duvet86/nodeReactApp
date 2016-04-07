@@ -5,7 +5,7 @@ const PATHS = {
   entry: path.join(__dirname, 'public/js/source.jsx'),
   output: {
 		path: path.join(__dirname, 'public/js/build'),
-		filename: 'bundle.js',
+		filename: 'bundle.min.js',
 		publicPath: '/js/build/'
   }
 };
@@ -14,7 +14,7 @@ const PLUGINS = {
 		new webpack.optimize.DedupePlugin(),
 		new webpack.optimize.OccurrenceOrderPlugin(),
 		new webpack.optimize.UglifyJsPlugin(),
-		new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1}),
+		//new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1}),
 		new webpack.DefinePlugin({
 			'process.env': { 'NODE_ENV': JSON.stringify('production') }
 		})

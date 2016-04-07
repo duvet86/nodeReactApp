@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run start:dev",
-    "start:dev": "rimraf public/js/build/bundle.js && node server",
-    "start:prod": "webpack --config ./webpack.prod.config --progress --profile --colors && node server",
+    "start:dev": "rimraf public/js/build/ && node server",
+    "start:prod": "rimraf public/js/build/ && webpack --config ./webpack.prod.config --progress --profile --colors && node server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "private": true,
