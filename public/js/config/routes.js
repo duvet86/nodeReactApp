@@ -1,4 +1,4 @@
-import FacebookLoginStore from '../flux/stores/FacebookLoginStore';
+import FacebookLoginStore from './flux/stores/FacebookLoginStore';
 
 function redirectToLogin(nextState, replace) {
   if (!FacebookLoginStore.isLoggedIn()) {
@@ -17,14 +17,14 @@ function redirectToDashboard(nextState, replace) {
 
 export default {
   component: require('../component/app-container.component').default,
-  childRoutes: [
-    { path: '/logout',
-      getComponent: (location, cb) => {
-        require.ensure([], (require) => {
-          cb(null, require('../component/logout.component').default);
-        });
-      }
-    },
+  // childRoutes: [
+  //   { path: '/logout',
+  //     getComponent: (location, cb) => {
+  //       require.ensure([], (require) => {
+  //         cb(null, require('../component/logout.component').default);
+  //       });
+  //     }
+  //   },
     { path: '/about',
       getComponent: (location, cb) => {
         require.ensure([], (require) => {
@@ -61,7 +61,7 @@ export default {
         // ...
       ]
     },
-    
+
     { onEnter: redirectToLogin,
       childRoutes: [
         // Protected routes that don't share the dashboard UI
