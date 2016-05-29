@@ -3,17 +3,14 @@ const path = require('path');
 const httpProxy = require('http-proxy');
 const compression = require('compression');
 
-console.log("npm_lifecycle_event", process.env.npm_lifecycle_event);
-
-const isProduction = process.env.npm_lifecycle_event === 'start:prod';
-const PORT = 8080;
-
-console.log('isProduction', isProduction);
+const isProduction = process.env.npm_lifecycle_event !== 'dev';
+const PORT = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+const IP_ADDRESS = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
 const proxy = httpProxy.createProxyServer();
 const app = express();
-app.use(compression());
 
+app.use(compression());
 // serve our static stuff like index.css
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules')));
@@ -30,7 +27,7 @@ if (!isProduction) {
 
 	// Any requests to localhost:8080/js/build is proxied
 	// to webpack-dev-server
-	app.all('/js/build/*', function (req, res) {
+	app.all('/build/*', function (req, res) {
 		
 		console.log('Redirect');
 		
@@ -52,9 +49,9 @@ proxy.on('error', function(e) {
 
 // send all requests to index.html so browserHistory in React Router works
 app.get('*', function (req, res) {
-	res.sendFile(path.join(__dirname, 'public', 'index.html'))
+	res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(PORT, function () {
-	console.log('Server running on port:' + PORT)
+app.listen(PORT, IP_ADDRESS, function () {
+	console.log('Server running on port:' + PORT);
 });

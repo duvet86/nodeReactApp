@@ -11,10 +11,10 @@ const Dashboard = () =>
 	<div>
 		<h1 className="page-header">Dashboard</h1>
 		<Row className="placeholders">
-	    	<Col xs={6} sm={3} md={5} className="placeholder">
+	    	<Col xs={12} sm={3} md={5} className="placeholder">
 	    		<PieChart />
 	    	</Col>
-	    	<Col xs={6} sm={3} md={6} className="placeholder">
+	    	<Col xs={12} sm={3} md={6} className="placeholder">
     			<LineChart />
     		</Col>
     	</Row>
@@ -145,6 +145,6 @@ const Dashboard = () =>
 		    	</tr>
 	    	</tbody>
 		</Table>
-	</div>
+	</div>;
 
 export default Dashboard;

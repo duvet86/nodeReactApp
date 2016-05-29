@@ -12,13 +12,14 @@ class FacebookLoginStoreClass extends Store {
 		this._store = this.createStore();
 	}
 	
-	createStore() {
+	createStore(initialized = false) {
 		return new  Map({
 			loading: false,
-			initialized: false,
+			initialized: initialized,
 			error: false,
 			authenticated: false,
-			token: null
+			token: null,
+			userInfo: {}
 		});
 	}
 	
@@ -39,9 +40,7 @@ class FacebookLoginStoreClass extends Store {
 		switch (type) {
 			case ActionTypes.FACEBOOK_INITIALIZED:
 				updatedStore = new  Map({
-					initialized: true,
-					authenticated: true,
-					token: data.authResponse.userID
+					initialized: true
 				});
 				this._store = this._store.merge(updatedStore);
 				this.__emitChange();
@@ -76,9 +75,16 @@ class FacebookLoginStoreClass extends Store {
 				break;
 				
 			case ActionTypes.FACEBOOK_LOGOUT:
-				this._store = this.createStore();
+				this._store = this.createStore(true);
 				this.__emitChange();
 				resolve(ActionTypes.FACEBOOK_LOGIN_ERROR);
+				break;
+				
+			case ActionTypes.FACEBOOK_USER_INFO:
+				updatedStore = new  Map({ userInfo: data });
+				this._store = this._store.merge(updatedStore);
+				this.__emitChange();
+				resolve(ActionTypes.FACEBOOK_USER_INFO);
 				break;
 		}
 	}

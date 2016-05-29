@@ -5,7 +5,7 @@ var config = require('./webpack.config');
 module.exports = function () {
 
 	var bundleStart = null;
-	var compiler = Webpack(config);
+	var compiler = new Webpack(config);
 
 	// We give notice in the terminal when it starts bundling and
 	// set the time it started

@@ -1,3 +1,5 @@
+/* globals localStorage */
+
 export default class {
 
 	static login(email, pass, cb) {

@@ -20,7 +20,8 @@ export default class TopNavigation extends Component {
 	
 	static propTypes = {
 		activeKey: PropTypes.number.isRequired,
-		authenticated: PropTypes.bool.isRequired
+		authenticated: PropTypes.bool.isRequired,
+		userName: PropTypes.string
 	};
 	
 	handleSelect = (selectedKey) => {
@@ -42,11 +43,13 @@ export default class TopNavigation extends Component {
 		
 		FacebookActionCreators.logout()
 			.then((res) => {
-				this.context.router.replace('/');
+				this.context.router.replace('/login');
 			});
 	}
 	
 	render() {
+		
+		const { activeKey, userName } = this.props;
 		
 		let link = <NavItem eventKey={3} onClick={this.handleFacebookLoginButton}>Login Facebook</NavItem>;
 		if (this.props.authenticated) {
@@ -59,14 +62,12 @@ export default class TopNavigation extends Component {
 					<Navbar.Brand>
 						<IndexLink to="/">React-Bootstrap</IndexLink>
 					</Navbar.Brand>
+					<Navbar.Toggle />
 				</Navbar.Header>
 				<Navbar.Collapse>
-					<Nav pullRight activeKey={this.props.activeKey} onSelect={this.handleSelect}>
-						<Navbar.Form pullLeft>
-		        			<Input type="text" placeholder="Search"/>
-		        		</Navbar.Form>
-						<LinkContainer to={{pathname: '/settings'}}>
-							<NavItem eventKey={2}>Setting</NavItem>
+					<Nav pullRight activeKey={activeKey} onSelect={this.handleSelect}>
+						<LinkContainer to={{pathname: `/user/${userName}`}}>
+							<NavItem eventKey={2}>User</NavItem>
 						</LinkContainer>
 						{link}
 						<NavDropdown eventKey={4} title="Help" id="basic-nav-dropdown">
@@ -77,6 +78,9 @@ export default class TopNavigation extends Component {
 							<MenuItem eventKey={4.3}>Separated link</MenuItem>
 						</NavDropdown>
 					</Nav>
+					<Navbar.Form pullRight>
+						<Input type="text" placeholder="Search"/>
+					</Navbar.Form>
 				</Navbar.Collapse>
 			</Navbar>
 		);

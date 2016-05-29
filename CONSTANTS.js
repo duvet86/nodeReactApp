@@ -1,25 +1,37 @@
 const webpack = require('webpack');
 const path = require('path');
 
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 const PATHS = {
-  entry: path.join(__dirname, 'public/js/source.jsx'),
+  entry: path.join(__dirname, 'public/js/source'),
   output: {
-		path: path.join(__dirname, 'public/js/build'),
-		filename: 'bundle.min.js',
-		publicPath: '/js/build/'
+		path: path.join(__dirname, 'public/build'),
+		filename: 'bundle.js',
+		publicPath: '/build/'
   }
 };
+
 const PLUGINS = {
 	prod: [
 		new webpack.optimize.DedupePlugin(),
 		new webpack.optimize.OccurrenceOrderPlugin(),
 		new webpack.optimize.UglifyJsPlugin(),
-		//new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1}),
 		new webpack.DefinePlugin({
-			'process.env': { 'NODE_ENV': JSON.stringify('production') }
-		})
+			'process.env': { 'NODE_ENV': JSON.stringify('production') },
+			'APP_ID': JSON.stringify("1651933625025985"),
+		}),
+		new ExtractTextPlugin('bundle.css')
 	],
-	dev: [ new webpack.HotModuleReplacementPlugin() ]
+	dev: [
+	    new webpack.HotModuleReplacementPlugin(),
+        new webpack.DefinePlugin({
+        	'APP_ID': JSON.stringify("1758294917723188")
+        }),
+        new ExtractTextPlugin('bundle.css', {
+            allChunks: true
+        })
+	]
 };
 
 module.exports = {

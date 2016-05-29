@@ -9,20 +9,23 @@ import TabActionCreators from '../flux/actions/TabActionCreators'
 
 export default class SideBar extends Component {
 
-	static propTypes = { activeKey: PropTypes.number.isRequired };
+	static propTypes = { activeKey: PropTypes.number.isRequired};
 	
 	handleSelect = (selectedKey) => {
 		TabActionCreators.changeTab({ activeKey: selectedKey });
 	}
 
 	render() {
+		
+		const { activeKey } = this.props;
+	
 		return (
-			<Nav className="nav-sidebar" activeKey={this.props.activeKey} onSelect={this.handleSelect}>
+			<Nav className="nav-sidebar" activeKey={activeKey} onSelect={this.handleSelect}>
 				<IndexLinkContainer to={{pathname: '/'}}>
 					<NavItem eventKey={1}>Home</NavItem>
 				</IndexLinkContainer>
-				<LinkContainer to={{pathname: '/user/foo'}}>
-					<NavItem eventKey={2}>User</NavItem>
+				<LinkContainer to={{pathname: '/settings'}}>
+					<NavItem eventKey={2}>Setting</NavItem>
 				</LinkContainer>
 				<LinkContainer to={{pathname: '/about'}}>
 					<NavItem eventKey={3}>About</NavItem>

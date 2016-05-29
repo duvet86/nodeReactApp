@@ -19,6 +19,6 @@ const ActionsCreator = {
 		dispatch(ActionTypes.LOGOUT, auth.logout());
 	}
 	
-}
+};
 
 export default ActionsCreator;

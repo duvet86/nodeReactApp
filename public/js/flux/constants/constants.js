@@ -1,1 +1,2 @@
 export const APP_ID = "1651933625025985";
+export const APP_ID_TEST = "1758294917723188";

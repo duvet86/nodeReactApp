@@ -1,6 +1,9 @@
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const path = require('path');
+
 const PATHS = require('./CONSTANTS').PATHS;
 const PLUGINS = require('./CONSTANTS').PLUGINS;
-const path = require('path');
 
 const config = {
 	devtool: 'eval',
@@ -27,13 +30,14 @@ const config = {
 		},
 		{
 			test: /\.css$/,
-			loaders: ['style', 'css']
+			include: path.join(__dirname, 'public/css/'),
+			loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
 		}]
 	},
 	plugins: PLUGINS.dev,
 	resolve: {
 		// you can now require('file') instead of require('file.js')
-		extensions: ['', '.js', '.jsx'] 
+		extensions: ['', '.js', '.jsx', '.css'] 
 	}
 };
 
