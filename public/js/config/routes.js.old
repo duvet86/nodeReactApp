@@ -17,7 +17,7 @@ function redirectToDashboard(nextState, replace) {
 
 export default {
   component: require('../component/app-container.component').default,
-  // childRoutes: [
+  childRoutes: [
   //   { path: '/logout',
   //     getComponent: (location, cb) => {
   //       require.ensure([], (require) => {

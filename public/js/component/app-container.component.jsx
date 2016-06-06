@@ -1,6 +1,6 @@
 import '../../css/app';
 
-import React, { Component, cloneElement } from 'react';
+import React, { PropTypes, Component, cloneElement } from 'react';
 
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
@@ -10,6 +10,13 @@ import TopNavigation from './top-navigation.component';
 import SideBar from './side-bar.component';
 
 export default class AppContainer extends Component {
+	
+	static propTypes = {
+		authenticated: PropTypes.boolean,
+		activeKey: PropTypes.string,
+		userInfo: PropTypes.object,
+		children: PropTypes.arrayOf(PropTypes.element)
+	};
 	
 	constructor(props) {
 		super(props);

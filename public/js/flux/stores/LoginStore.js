@@ -5,31 +5,16 @@ import { Map } from 'immutable';
 import ActionTypes from '../constants/ActionTypes';
 import * as AppDispatcher from '../AppDispatcher';
 
-import auth from '../../utils/auth';
-
-function createStore() {
-	
-	let authenticated = false;
-	let token = null; 
-	if (auth.loggedIn()) {
-		authenticated = true;
-		token = auth.getToken();
-	}
-	
-	return new  Map(
-	{
-		loading: false,
-		error: false,
-		authenticated: authenticated,
-		token: token
-	});
-}
-
 class LoginStoreClass extends Store {
 
-	constructor(dispatcher, store) {
-		super(dispatcher, store);
-		this._store = store;
+	constructor(dispatcher) {
+		super(dispatcher);
+		this._store = new Map({
+			loading: false,
+			error: false,
+			authenticated: false,
+			token: null
+		});
 	}
 	
 	getStore() {
@@ -43,7 +28,7 @@ class LoginStoreClass extends Store {
 	// @override
 	__onDispatch(payload) {
 
-		const { resolve, response, type } = payload;
+		const { data, resolve, type } = payload;
 		let updatedStore = {};
 
 		switch (type) {
@@ -64,8 +49,7 @@ class LoginStoreClass extends Store {
 			case ActionTypes.REQUEST_USER_SUCCESS:
 				// process success
 				const { authenticated, token } = response;
-				updatedStore = new  Map(
-				{
+				updatedStore = new  Map({
 					authenticated: authenticated,
 					token: token
 				});
@@ -82,8 +66,6 @@ class LoginStoreClass extends Store {
 	}
 }
 
-let store = createStore();
-
-const LoginStore = new LoginStoreClass(AppDispatcher, store);
+const LoginStore = new LoginStoreClass(AppDispatcher);
 
 export default LoginStore;

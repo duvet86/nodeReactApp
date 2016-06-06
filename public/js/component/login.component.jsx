@@ -1,17 +1,19 @@
 import '../../css/login';
 
-import React, { Component, PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react';
 
 import Grid from 'react-bootstrap/lib/Grid';
-import Input from 'react-bootstrap/lib/Input';
-import Col from 'react-bootstrap/lib/Col';
 import Button from 'react-bootstrap/lib/Button';
 
 import FacebookActionCreators from '../flux/actions/FacebookActionsCreator'
 
 export default class Login extends Component {
 
-	static contextTypes = { router: React.PropTypes.object };
+	static contextTypes = { router: PropTypes.object };
+	static propTypes = {
+		location: PropTypes.object,
+		initialized: PropTypes.boolean
+	};
 
 	handleFacebookLoginButton = (e) => {
 		e.preventDefault();

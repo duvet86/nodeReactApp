@@ -28,9 +28,6 @@ if (!isProduction) {
 	// Any requests to localhost:8080/js/build is proxied
 	// to webpack-dev-server
 	app.all('/build/*', function (req, res) {
-		
-		console.log('Redirect');
-		
 		proxy.web(req, res, {
 			target : 'http://localhost:3000'
 		});
@@ -39,6 +36,17 @@ if (!isProduction) {
 } else {
 	console.log('Production');
 }
+
+// Any requests to localhost:8080/api/* is proxied
+// to the lumen backend
+app.all('/api/*', function (req, res) {
+	
+	console.log('Redirect to Lumen');
+	
+	proxy.web(req, res, {
+		target : 'http://localhost/' + req.path
+	});
+});
 
 // It is important to catch any errors from the proxy or the
 // server will crash. An example of this is connecting to the

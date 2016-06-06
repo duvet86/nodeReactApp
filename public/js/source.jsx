@@ -23,7 +23,6 @@ function redirectToDashboard(nextState, replace) {
 
 render((
 	<Router history={browserHistory}>
-
 		<Route component={AppBootstrap}>
 	
 			<Route
@@ -82,9 +81,8 @@ render((
 				/>
 		
 			</Route>
-				
-		</Route>
 
+		</Route>
 	</Router>
 		
 	), document.getElementById('myGridContainer'));

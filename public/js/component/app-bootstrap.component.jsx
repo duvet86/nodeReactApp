@@ -1,6 +1,4 @@
-import React, { Component, cloneElement } from 'react';
-
-import { Map } from 'immutable';
+import React, { PropTypes, Component, cloneElement } from 'react';
 
 import ActionTypes from '../flux/constants/ActionTypes';
 
@@ -12,6 +10,7 @@ import FacebookActionsCreator from '../flux/actions/FacebookActionsCreator';
 export default class AppContainer extends Component {
 
 	static contextTypes = { router: React.PropTypes.object };
+	static propTypes = { children: PropTypes.arrayOf(PropTypes.element) };
 	
 	constructor(props) {
 		super(props);
