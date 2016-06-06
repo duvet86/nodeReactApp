@@ -3,28 +3,25 @@ import '../../css/login';
 import React, { Component, PropTypes } from 'react';
 
 import Grid from 'react-bootstrap/lib/Grid';
-import Button from 'react-bootstrap/lib/Button';
 
-import FacebookActionCreators from '../flux/actions/FacebookActionsCreator'
+import LoginActionCreators from '../flux/actions/LoginActionCreators';
 
 export default class Login extends Component {
 
-	static contextTypes = { router: PropTypes.object };
-	static propTypes = {
-		location: PropTypes.object,
-		initialized: PropTypes.boolean
-	};
+	static contextTypes = { router: PropTypes.object }
+	static propTypes = { location: PropTypes.object }
 
-	handleFacebookLoginButton = (e) => {
-		e.preventDefault();
-		
+	handleSubmit = (e) => {
+		e.preventDefault()
+
+		const email = this.refs.email.value
+		const pass = this.refs.pass.value
+
 		const { location } = this.props;
-		FacebookActionCreators.login()
-			// get user info
-			.then(() => {
-				return FacebookActionCreators.getUserInfo();
+		LoginActionCreators.login(email, pass)
+			.then((res) => {
+				return LoginActionCreators.getUserInfo(res);
 			})
-			// redirect
 			.then(() => {
 				if (location.state && location.state.nextPathname) {
 					this.context.router.replace(location.state.nextPathname);
@@ -32,28 +29,17 @@ export default class Login extends Component {
 					this.context.router.replace('/');
 				}
 			});
-		
-	}
+    }
 
 	render() {
-		
-		let loginText = 'Loading App';
-		let disabled = true;
-		if (this.props.initialized) {
-			loginText = 'Login using Facebook';
-			disabled = false;
-		}
-	
 		return (
 			<Grid className="grid-login">
 				<div className="login">
-					<Button
-						bsStyle="success"
-						bsSize="large"
-						block
-						disabled={disabled}
-						onClick={this.handleFacebookLoginButton}
-					>{loginText}</Button>
+					<form onSubmit={this.handleSubmit}>
+						<label><input ref="email" placeholder="email" defaultValue="duvet86@gmail.com" /></label>
+						<label><input ref="pass" placeholder="password" defaultValue="duvet86" /></label>
+						<button type="submit">login</button>
+					</form>
 				</div>
 			</Grid>
 		);

@@ -14,7 +14,7 @@ const Dashboard = () =>
 			<Col xs={12} sm={3} md={5} className="placeholder">
 				<PieChart />
 			</Col>
-			<Col xs={12} sm={3} md={6} className="placeholder">
+			<Col xs={12} sm={4} md={5} className="placeholder">
 				<LineChart />
 			</Col>
 		</Row>

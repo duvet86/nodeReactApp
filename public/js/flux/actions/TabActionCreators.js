@@ -1,4 +1,4 @@
-import { dispatch, dispatchAsync } from '../AppDispatcher';
+import { dispatch } from '../AppDispatcher';
 import ActionTypes from '../constants/ActionTypes';
 
 const TabActionCreators = {

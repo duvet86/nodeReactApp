@@ -8,40 +8,31 @@ import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
-import Input from 'react-bootstrap/lib/Input';
+import FormGroup from 'react-bootstrap/lib/FormGroup';
+import FormControl from 'react-bootstrap/lib/FormControl';
+import Button from 'react-bootstrap/lib/Button';
 
-import TabActionCreators from '../flux/actions/TabActionCreators'
-
-import FacebookActionCreators from '../flux/actions/FacebookActionsCreator'
+import TabActionCreators from '../flux/actions/TabActionCreators';
+import LoginActionCreators from '../flux/actions/LoginActionCreators';
 
 export default class TopNavigation extends Component {
 
-	static contextTypes = { router: React.PropTypes.object };
+	static contextTypes = { router: React.PropTypes.object }
 
 	static propTypes = {
 		activeKey: PropTypes.number.isRequired,
 		authenticated: PropTypes.bool.isRequired,
 		userName: PropTypes.string
-	};
+	}
 
 	handleSelect = (selectedKey) => {
 		TabActionCreators.changeTab({ activeKey: selectedKey });
 	}
 
-	handleFacebookLoginButton = (e) => {
+	handleLogoutButton = (e) => {
 		e.preventDefault();
 
-		FacebookActionCreators.login()
-			.then(() => {
-				this.context.router.replace('/');
-			});
-
-	}
-
-	handleFacebookLogoutButton = (e) => {
-		e.preventDefault();
-
-		FacebookActionCreators.logout()
+		LoginActionCreators.logout()
 			.then(() => {
 				this.context.router.replace('/login');
 			});
@@ -50,11 +41,6 @@ export default class TopNavigation extends Component {
 	render() {
 
 		const { activeKey, userName } = this.props;
-
-		let link = <NavItem eventKey={3} onClick={this.handleFacebookLoginButton}>Login Facebook</NavItem>;
-		if (this.props.authenticated) {
-			link = <NavItem eventKey={3} onClick={this.handleFacebookLogoutButton}>Logout Facebook</NavItem>;
-		}
 
 		return (
 			<Navbar fluid fixedTop>
@@ -69,7 +55,7 @@ export default class TopNavigation extends Component {
 						<LinkContainer to={{ pathname: `/user/${userName}` }}>
 							<NavItem eventKey={2}>User</NavItem>
 						</LinkContainer>
-						{link}
+						<NavItem eventKey={3} onClick={this.handleLogoutButton}>Logout</NavItem>
 						<NavDropdown eventKey={4} title="Help" id="basic-nav-dropdown">
 							<MenuItem eventKey={4.1}>Action</MenuItem>
 							<MenuItem eventKey={4.2}>Another action</MenuItem>
@@ -79,7 +65,11 @@ export default class TopNavigation extends Component {
 						</NavDropdown>
 					</Nav>
 					<Navbar.Form pullRight>
-						<Input type="text" placeholder="Search"/>
+						<FormGroup>
+							<FormControl type="text" placeholder="Search" />
+						</FormGroup>
+						{' '}
+						<Button type="submit">Submit</Button>
 					</Navbar.Form>
 				</Navbar.Collapse>
 			</Navbar>

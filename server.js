@@ -27,7 +27,10 @@ if (!isProduction) {
 
 	// Any requests to localhost:8080/js/build is proxied
 	// to webpack-dev-server
-	app.all('/build/*', function (req, res) {
+	app.all('/js/build/*', function (req, res) {
+		
+		console.log('Redirect');
+		
 		proxy.web(req, res, {
 			target : 'http://localhost:3000'
 		});
@@ -41,10 +44,10 @@ if (!isProduction) {
 // to the lumen backend
 app.all('/api/*', function (req, res) {
 	
-	console.log('Redirect to Lumen');
+	console.log('Redirect to Lumen: http://localhost/lumen/public');
 	
 	proxy.web(req, res, {
-		target : 'http://localhost/' + req.path
+		target : 'http://localhost/lumen/public'
 	});
 });
 

@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import FacebookActionCreators from '../flux/actions/FacebookActionsCreator'
+import FacebookActionCreators from '../flux/actions/FacebookActionsCreator';
 
 export default class Logout extends Component {
 	

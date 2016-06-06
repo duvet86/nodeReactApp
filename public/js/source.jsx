@@ -2,12 +2,12 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
-import FacebookLoginStore from './flux/stores/FacebookLoginStore';
+import LoginStore from './flux/stores/LoginStore';
 
 import AppBootstrap from './component/app-bootstrap.component';
 
 function redirectToLogin(nextState, replace) {
-	if (!FacebookLoginStore.isLoggedIn()) {
+	if (!LoginStore.isLoggedIn()) {
 		replace({
 			pathname: '/login',
 			state: { nextPathname: nextState.location.pathname }
@@ -16,7 +16,7 @@ function redirectToLogin(nextState, replace) {
 }
 
 function redirectToDashboard(nextState, replace) {
-	if (FacebookLoginStore.isLoggedIn()) {
+	if (LoginStore.isLoggedIn()) {
 		replace('/');
 	}
 }

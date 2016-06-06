@@ -2,7 +2,11 @@ import keyMirror from 'keymirror';
 
 export default keyMirror({
 	
-	REQUEST_USER: null,
+	REQUEST_LOGIN: null,
+	REQUEST_LOGIN_SUCCESS: null,
+	REQUEST_LOGIN_ERROR: null,
+    
+    REQUEST_USER: null,
 	REQUEST_USER_SUCCESS: null,
 	REQUEST_USER_ERROR: null,
 	
@@ -18,5 +22,7 @@ export default keyMirror({
     FACEBOOK_NOT_AUTHORIZED: null,
     FACEBOOK_LOGIN_ERROR: null,
     FACEBOOK_USER_INFO: null
+    
+    
 
 });

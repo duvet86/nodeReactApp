@@ -1,46 +1,38 @@
 import React, { PropTypes, Component, cloneElement } from 'react';
 
-import ActionTypes from '../flux/constants/ActionTypes';
-
-import FacebookLoginStore from '../flux/stores/FacebookLoginStore';
+import LoginStore from '../flux/stores/LoginStore';
 import TabStore from '../flux/stores/TabStore';
-
-import FacebookActionsCreator from '../flux/actions/FacebookActionsCreator';
 
 export default class AppContainer extends Component {
 
-	static contextTypes = { router: React.PropTypes.object };
-	static propTypes = { children: PropTypes.arrayOf(PropTypes.element) };
+	static contextTypes = { router: PropTypes.object }
+	static propTypes = {
+		children: PropTypes.oneOfType([
+			React.PropTypes.array,
+			React.PropTypes.object
+		])
+	}
 	
 	constructor(props) {
 		super(props);
 		this.state = {
-			loginStore: FacebookLoginStore.getStore(),
+			loginStore: LoginStore.getStore(),
 			tabSore: TabStore.getStore()
 		};
 	}
 
 	componentDidMount() {
-		FacebookLoginStore.addListener(this._onChangeFacebookLoginStore);
+		LoginStore.addListener(this._onChangeLoginStore);
 		TabStore.addListener(this._onChangeTabStore);
-		
-		FacebookActionsCreator.initFacebook()
-			.then((res) => {
-				if (res == ActionTypes.FACEBOOK_LOGIN) {
-					this.context.router.replace('/');
-				} else {
-					this.context.router.replace('/login');
-				}
-			});
 	}
 
 	componentWillUnmount() {
-		FacebookLoginStore.remove();
+		LoginStore.remove();
 		TabStore.remove();
 	}
 	
-	_onChangeFacebookLoginStore = () => {
-		this.setState({ loginStore: FacebookLoginStore.getStore() });
+	_onChangeLoginStore = () => {
+		this.setState({ loginStore: LoginStore.getStore() });
 	}
 	
 	_onChangeTabStore = () => {

@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "build": "rimraf public/build/ && webpack --config ./webpack.prod.config --progress --profile --colors",
-    "dev": "rimraf public/build/ && node server",
+    "build": "rimraf public/js/build/ && webpack --config ./webpack.prod.config --progress --profile --colors",
+    "dev": "rimraf public/js/build/ && node server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -34,7 +34,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-runtime": "^6.9.0",
     "bootstrap": "^3.3.6",
-    "chart.js": "^2.1.4",
+    "chart.js": "^1.1.1",
     "compression": "^1.6.2",
     "css-loader": "^0.23.1",
     "express": "^4.13.4",

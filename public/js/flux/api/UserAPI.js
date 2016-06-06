@@ -24,9 +24,24 @@ export default class {
 				.then(function (res) {
 					resolve({
 						authenticated: true,
-						token: res.data.token
+						token: res.body.token
 					});
-					return;
+				});
+			
+		});
+
+		return request;
+	}
+	
+	static getUserInfo(token) {
+		
+		const request = new Promise((resolve, reject) => {
+		
+			superagent.get('/api/user')
+				.set('Accept', 'application/json')
+				.set('Authorization', 'Bearer ' + token)
+				.then(function (res) {
+					resolve(res);
 				});
 			
 		});

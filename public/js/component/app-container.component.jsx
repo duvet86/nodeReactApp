@@ -12,11 +12,14 @@ import SideBar from './side-bar.component';
 export default class AppContainer extends Component {
 	
 	static propTypes = {
-		authenticated: PropTypes.boolean,
-		activeKey: PropTypes.string,
+		authenticated: PropTypes.bool,
+		activeKey: PropTypes.number,
 		userInfo: PropTypes.object,
-		children: PropTypes.arrayOf(PropTypes.element)
-	};
+		children: PropTypes.oneOfType([
+			React.PropTypes.array,
+			React.PropTypes.object
+		])
+	}
 	
 	constructor(props) {
 		super(props);
@@ -28,7 +31,7 @@ export default class AppContainer extends Component {
 				<TopNavigation
 					authenticated={this.props.authenticated}
 					activeKey={this.props.activeKey}
-					userName={this.props.userInfo.name}
+					userName={this.props.userInfo.email}
 				/>
 				<Grid fluid>
 					<Row>
