@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import { withRouter } from 'react-router';
 
 import { IndexLink } from 'react-router'
 import { LinkContainer } from 'react-router-bootstrap';
@@ -13,16 +14,17 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import Button from 'react-bootstrap/lib/Button';
 
 import TabActionCreators from '../flux/actions/TabActionCreators';
-import LoginActionCreators from '../flux/actions/LoginActionCreators';
+import LoginActionsCreators from '../flux/actions/LoginActionsCreators';
 
-export default class TopNavigation extends Component {
-
-	static contextTypes = { router: React.PropTypes.object }
+class TopNavigation extends Component {
 
 	static propTypes = {
 		activeKey: PropTypes.number.isRequired,
 		authenticated: PropTypes.bool.isRequired,
-		userName: PropTypes.string
+		userName: PropTypes.string.isRequired,
+		router: React.PropTypes.shape({
+			replace: React.PropTypes.func.isRequired
+		}).isRequired
 	}
 
 	handleSelect = (selectedKey) => {
@@ -32,9 +34,9 @@ export default class TopNavigation extends Component {
 	handleLogoutButton = (e) => {
 		e.preventDefault();
 
-		LoginActionCreators.logout()
+		LoginActionsCreators.logout()
 			.then(() => {
-				this.context.router.replace('/login');
+				this.props.router.replace('/login');
 			});
 	}
 
@@ -76,3 +78,5 @@ export default class TopNavigation extends Component {
 		);
 	}
 }
+
+export default withRouter(TopNavigation);

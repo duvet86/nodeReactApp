@@ -36,7 +36,7 @@ export function dispatch(type, action = {}) {
 		// Actions are just plain JavaScript objects describing “what happened”.
 		// Think of them as newspapers.
 		if (action.error) {
-			console.error(type, action);
+			console.log(type, action);
 		} else {
 			console.log(type, action);
 		}

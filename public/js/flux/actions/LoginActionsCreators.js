@@ -11,7 +11,7 @@ const LoginActionsCreators = {
 				request: ActionTypes.REQUEST_LOGIN,
 				success: ActionTypes.REQUEST_LOGIN_SUCCESS,
 				failure: ActionTypes.REQUEST_LOGIN_ERROR
-			}, { resolve: resolve || reject });
+			}, { resolve: resolve, reject: reject });
 		});
 	},
 	
@@ -21,12 +21,28 @@ const LoginActionsCreators = {
 				request: ActionTypes.REQUEST_USER,
 				success: ActionTypes.REQUEST_USER_SUCCESS,
 				failure: ActionTypes.REQUEST_USER_ERROR
-			}, { resolve: resolve || reject });
+			}, { resolve: resolve, reject: reject });
+		});
+	},
+
+	validateToken: function (token) {
+		return new Promise((resolve, reject) => {
+			dispatchAsync(UserAPI.validateToken(token), {
+				request: ActionTypes.REQUEST_VALIDATE_TOKEN,
+				success: ActionTypes.REQUEST_VALIDATE_TOKEN_SUCCESS,
+				failure: ActionTypes.REQUEST_VALIDATE_TOKEN_ERROR
+			}, { resolve: resolve, reject: reject });
 		});
 	},
 	
 	logout: function () {
-		dispatch(ActionTypes.LOGOUT, UserAPI.logout());
+		return new Promise((resolve, reject) => {
+			dispatch(ActionTypes.LOGOUT, {
+				action: UserAPI.logout(),
+				resolve: resolve,
+				reject: reject
+			});
+		});
 	}
 	
 };

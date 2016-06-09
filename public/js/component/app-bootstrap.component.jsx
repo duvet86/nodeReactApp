@@ -5,14 +5,13 @@ import TabStore from '../flux/stores/TabStore';
 
 export default class AppContainer extends Component {
 
-	static contextTypes = { router: PropTypes.object }
 	static propTypes = {
 		children: PropTypes.oneOfType([
 			React.PropTypes.array,
 			React.PropTypes.object
 		])
 	}
-	
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -30,17 +29,17 @@ export default class AppContainer extends Component {
 		LoginStore.remove();
 		TabStore.remove();
 	}
-	
+
 	_onChangeLoginStore = () => {
 		this.setState({ loginStore: LoginStore.getStore() });
 	}
-	
+
 	_onChangeTabStore = () => {
 		this.setState({ tabSore: TabStore.getStore() });
 	}
 
 	render() {
-		
+
 		let loginProps = {
 			error: this.state.loginStore.get("error"),
 			authenticated: this.state.loginStore.get("authenticated"),
@@ -48,10 +47,10 @@ export default class AppContainer extends Component {
 			userInfo: this.state.loginStore.get("userInfo"),
 			activeKey: this.state.tabSore.get("activeKey")
 		};
-		
+
 		return (
 			<div>
-				{this.props.children && cloneElement(this.props.children, loginProps)}
+				{this.props.children && cloneElement(this.props.children, loginProps) }
 			</div>
 		);
 	}

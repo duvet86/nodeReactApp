@@ -33,7 +33,7 @@ class LoginStoreClass extends Store {
 	// @override
 	__onDispatch(payload) {
 
-		const { response, resolve, type } = payload;
+		const { type, response, resolve, reject } = payload;
 		let updatedStore = {};
 
 		switch (type) {
@@ -49,6 +49,7 @@ class LoginStoreClass extends Store {
 				updatedStore = new Map({ error: true });
 				this._store = this._store.merge(updatedStore);
 				this.__emitChange();
+				reject();
 				break;
 
 			case ActionTypes.REQUEST_LOGIN_SUCCESS:
@@ -74,12 +75,40 @@ class LoginStoreClass extends Store {
 				updatedStore = new Map({ error: true });
 				this._store = this._store.merge(updatedStore);
 				this.__emitChange();
+				reject();
 				break;
 
 			case ActionTypes.REQUEST_USER_SUCCESS:
 				// process success
 				updatedStore = new Map({
-					userInfo: response.body.user
+					userInfo: response
+				});
+				this._store = this._store.merge(updatedStore);
+				this.__emitChange();
+				resolve();
+				break;
+
+			case ActionTypes.REQUEST_VALIDATE_TOKEN:
+				// loading
+				updatedStore = new Map({ loading: true });
+				this._store = this._store.merge(updatedStore);
+				this.__emitChange();
+				break;
+
+			case ActionTypes.REQUEST_VALIDATE_TOKEN_ERROR:
+				// error
+				updatedStore = new Map({ error: true });
+				this._store = this._store.merge(updatedStore);
+				this.__emitChange();
+				reject();
+				break;
+
+			case ActionTypes.REQUEST_VALIDATE_TOKEN_SUCCESS:
+				// process success
+				updatedStore = new Map({
+					authenticated: true,
+					token: response.token,
+					userInfo: response.userInfo
 				});
 				this._store = this._store.merge(updatedStore);
 				this.__emitChange();
@@ -89,6 +118,7 @@ class LoginStoreClass extends Store {
 			case ActionTypes.LOGOUT:
 				this._store = this._createStore();
 				this.__emitChange();
+				resolve();
 				break;
 		}
 	}

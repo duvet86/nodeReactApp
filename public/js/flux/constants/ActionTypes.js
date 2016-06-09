@@ -9,6 +9,10 @@ export default keyMirror({
     REQUEST_USER: null,
 	REQUEST_USER_SUCCESS: null,
 	REQUEST_USER_ERROR: null,
+
+    REQUEST_VALIDATE_TOKEN: null,
+	REQUEST_VALIDATE_TOKEN_SUCCESS: null,
+	REQUEST_VALIDATE_TOKEN_ERROR: null,
 	
 	LOGOUT: null,
 	

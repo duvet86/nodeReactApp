@@ -1,15 +1,20 @@
 import '../../css/login';
 
 import React, { Component, PropTypes } from 'react';
+import { withRouter } from 'react-router';
 
 import Grid from 'react-bootstrap/lib/Grid';
 
-import LoginActionCreators from '../flux/actions/LoginActionCreators';
+import LoginActionsCreators from '../flux/actions/LoginActionsCreators';
 
-export default class Login extends Component {
+class Login extends Component {
 
-	static contextTypes = { router: PropTypes.object }
-	static propTypes = { location: PropTypes.object }
+	static propTypes = {
+		location: PropTypes.object,
+		router: React.PropTypes.shape({
+			replace: React.PropTypes.func.isRequired
+		}).isRequired
+	}
 
 	handleSubmit = (e) => {
 		e.preventDefault()
@@ -18,15 +23,15 @@ export default class Login extends Component {
 		const pass = this.refs.pass.value
 
 		const { location } = this.props;
-		LoginActionCreators.login(email, pass)
-			.then((res) => {
-				return LoginActionCreators.getUserInfo(res);
+		LoginActionsCreators.login(email, pass)
+			.then((token) => {
+				return LoginActionsCreators.getUserInfo(token);
 			})
 			.then(() => {
 				if (location.state && location.state.nextPathname) {
-					this.context.router.replace(location.state.nextPathname);
+					this.props.router.replace(location.state.nextPathname);
 				} else {
-					this.context.router.replace('/');
+					this.props.router.replace('/');
 				}
 			});
     }
@@ -46,3 +51,5 @@ export default class Login extends Component {
 	}
 
 }
+
+export default withRouter(Login);

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-import FacebookActionCreators from '../flux/actions/FacebookActionsCreator';
+import LoginStore from '../flux/stores/LoginStore';
 
 export default class Logout extends Component {
 	
 	componentDidMount() {
-		FacebookActionCreators.logout();
+		LoginStore.logout();
 	}
 
 	render() {

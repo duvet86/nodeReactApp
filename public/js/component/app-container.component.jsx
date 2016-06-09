@@ -14,10 +14,13 @@ export default class AppContainer extends Component {
 	static propTypes = {
 		authenticated: PropTypes.bool,
 		activeKey: PropTypes.number,
-		userInfo: PropTypes.object,
+		userInfo: PropTypes.oneOfType([
+			PropTypes.string,
+			PropTypes.object
+		]),
 		children: PropTypes.oneOfType([
-			React.PropTypes.array,
-			React.PropTypes.object
+			PropTypes.array,
+			PropTypes.object
 		])
 	}
 	
