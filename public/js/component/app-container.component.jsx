@@ -46,6 +46,11 @@ export default class AppContainer extends Component {
 						</Col>
 					</Row>
 				</Grid>
+				<footer className="footer">
+					<div className="container">
+						<p className="text-muted">Created By <a target="_blank" href="https://it.linkedin.com/in/luca-marangon-b640b222">Luca</a> <span className="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span></p>
+					</div>
+				</footer>
 			</div>
 		);
 	}

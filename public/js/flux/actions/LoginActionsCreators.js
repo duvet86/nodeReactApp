@@ -43,6 +43,10 @@ const LoginActionsCreators = {
 				reject: reject
 			});
 		});
+	},
+
+	loaded: function () {
+		dispatch(ActionTypes.LOADED, { loaded: true });
 	}
 	
 };

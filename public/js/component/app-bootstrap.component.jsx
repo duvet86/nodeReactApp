@@ -41,6 +41,7 @@ export default class AppContainer extends Component {
 	render() {
 
 		let loginProps = {
+			loaded: this.state.loginStore.get("loaded"),
 			error: this.state.loginStore.get("error"),
 			authenticated: this.state.loginStore.get("authenticated"),
 			initialized: this.state.loginStore.get("initialized"),

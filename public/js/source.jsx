@@ -9,7 +9,6 @@ import AppBootstrap from './component/app-bootstrap.component';
 import LoginActionsCreators from './flux/actions/LoginActionsCreators';
 
 function redirectToLogin(nextState, replace, next) {
-
 	let token = localStorage.getItem('token');
 	if (!LoginStore.isLoggedIn() && token) {
 		LoginActionsCreators.validateToken(token)

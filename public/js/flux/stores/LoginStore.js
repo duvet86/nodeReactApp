@@ -14,7 +14,7 @@ class LoginStoreClass extends Store {
 
 	_createStore() {
 		return new Map({
-			loading: false,
+			loaded: true,
 			error: false,
 			authenticated: false,
 			token: null,
@@ -39,7 +39,7 @@ class LoginStoreClass extends Store {
 		switch (type) {
 			case ActionTypes.REQUEST_LOGIN:
 				// loading
-				updatedStore = new Map({ loading: true });
+				updatedStore = new Map({ loaded: false });
 				this._store = this._store.merge(updatedStore);
 				this.__emitChange();
 				break;
@@ -65,7 +65,7 @@ class LoginStoreClass extends Store {
 
 			case ActionTypes.REQUEST_USER:
 				// loading
-				updatedStore = new Map({ loading: true });
+				updatedStore = new Map({ loaded: false });
 				this._store = this._store.merge(updatedStore);
 				this.__emitChange();
 				break;
@@ -80,9 +80,7 @@ class LoginStoreClass extends Store {
 
 			case ActionTypes.REQUEST_USER_SUCCESS:
 				// process success
-				updatedStore = new Map({
-					userInfo: response
-				});
+				updatedStore = new Map({ userInfo: response });
 				this._store = this._store.merge(updatedStore);
 				this.__emitChange();
 				resolve();
@@ -90,14 +88,17 @@ class LoginStoreClass extends Store {
 
 			case ActionTypes.REQUEST_VALIDATE_TOKEN:
 				// loading
-				updatedStore = new Map({ loading: true });
+				updatedStore = new Map({ loaded: false });
 				this._store = this._store.merge(updatedStore);
 				this.__emitChange();
 				break;
 
 			case ActionTypes.REQUEST_VALIDATE_TOKEN_ERROR:
 				// error
-				updatedStore = new Map({ error: true });
+				updatedStore = new Map({
+					error: true,
+					loaded: true
+				});
 				this._store = this._store.merge(updatedStore);
 				this.__emitChange();
 				reject();
@@ -119,6 +120,12 @@ class LoginStoreClass extends Store {
 				this._store = this._createStore();
 				this.__emitChange();
 				resolve();
+				break;
+
+			case ActionTypes.LOADED:
+				updatedStore = new Map({ loaded: true });
+				this._store = this._store.merge(updatedStore);
+				this.__emitChange();
 				break;
 		}
 	}

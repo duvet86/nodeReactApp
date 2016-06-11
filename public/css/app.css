@@ -2,11 +2,26 @@
  * Base structure
  */
 
+ html {
+  position: relative;
+  min-height: 100%;
+}
+
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
   padding-top: 50px;
+  margin-bottom: 35px;
 }
 
+.footer .container {
+  width: auto;
+  padding: 0 15px;
+  float: right;
+}
+
+.container .text-muted {
+  margin: 8px 0px;
+}
 
 /*
  * Global add-ons
@@ -109,4 +124,18 @@ body {
 .placeholder img {
   display: inline-block;
   border-radius: 50%;
+}
+
+
+/*
+ * Sticky footer
+ */
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 36px;
+  background-color: #f8f8f8;;
 }

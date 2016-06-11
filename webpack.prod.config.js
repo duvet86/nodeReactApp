@@ -7,6 +7,7 @@ const PLUGINS = require('./CONSTANTS').PLUGINS;
 
 const config = {
 	entry: {
+		common: 'babel-polyfill',
 		app: PATHS.entry
 	},
 	output: {

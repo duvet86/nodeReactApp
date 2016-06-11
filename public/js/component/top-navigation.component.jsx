@@ -21,7 +21,7 @@ class TopNavigation extends Component {
 	static propTypes = {
 		activeKey: PropTypes.number.isRequired,
 		authenticated: PropTypes.bool.isRequired,
-		userName: PropTypes.string.isRequired,
+		userName: PropTypes.string,
 		router: React.PropTypes.shape({
 			replace: React.PropTypes.func.isRequired
 		}).isRequired
